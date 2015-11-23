@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Kyburz Math{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Welcome to Kyburz Math!</h1>
+</div>
+<div >
+    <a class="btn btn-default" href="{{ url_for('auth.login') }}">Login</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Sign Up</a>
+    <a class="btn btn-info" href="{{ url_for('main.lessons', user=current_user) }}">Continue as Guest</a>
+</div>
+{% endblock %}

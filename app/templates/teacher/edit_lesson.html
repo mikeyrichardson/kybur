@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Kyburz - Create Lessons{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h3>Lesson {{ lesson.number }}: {{ lesson.name }}</h3>
+</div>
+<form class="form-horizontal" role="form" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group row">
+            <div class="col-xs-10">
+                {{ form.text(class_='form-control', placeholder='Equation') }}
+            </div>
+            <div class="col-xs-1">
+                {{ form.submit(class_='btn btn-success', value='Add') }}
+            </div>
+        </div>
+</form>
+
+
+<div>
+{% set problems = lesson.problems.all() %}
+{%  if problems %}
+<br>
+<br>
+    <table class="table">
+        <tr>
+            <th class="col-xs-1 col-sm-1">#</th>
+            <th class="col-xs-3 col-sm-3">Equation</th>
+            <th class="col-xs-3 col-sm-3">Solution</th>
+            <th class="col-xs-3 col-sm-3">Left Side Value</th>
+            <th class="col-xs-2 col-sm-2"></th>
+        </tr>
+        {% for problem in problems %}
+            <tr>
+                <td>{{ problem.number }}</td>
+                <td>{{ problem.text }}</td>
+                {% if problem.solution_denominator == 1 %}
+                <td>{{ problem.solution_numerator }}</td>
+                {% else %}
+                <td>{{ problem.solution_numerator }}/{{ problem.solution_denominator }}</td>
+                {% endif %}
+                {%  if problem.left_side_denominator == 1 %}
+                <td>{{ problem.left_side_numerator }}</td>
+                {% else %}
+                <td>{{ problem.left_side_numerator }}/{{ problem.left_side_denominator }}</td>
+                {% endif %}
+                <td><a class="btn btn-danger" href="#">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+</div>
+{% endblock %}
